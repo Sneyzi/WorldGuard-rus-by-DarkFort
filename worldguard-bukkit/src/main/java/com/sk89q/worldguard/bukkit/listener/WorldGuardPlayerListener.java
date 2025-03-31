@@ -430,7 +430,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
 
             if (!test.apply(event.getMessage())) {
                 String message = set.queryValue(localPlayer, Flags.DENY_MESSAGE);
-                RegionProtectionListener.formatAndSendDenyMessage("use " + event.getMessage(), localPlayer, message);
+                RegionProtectionListener.formatAndSendDenyMessage("использовать " + event.getMessage(), localPlayer, message);
                 event.setCancelled(true);
                 return;
             }

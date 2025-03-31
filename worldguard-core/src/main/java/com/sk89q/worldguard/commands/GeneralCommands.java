@@ -38,7 +38,8 @@ public class GeneralCommands {
     public GeneralCommands(WorldGuard worldGuard) {
         this.worldGuard = worldGuard;
     }
-    
+
+    /*
     @Command(aliases = {"god"}, usage = "[игрок]",
             desc = "Включить режим Бога для игрока", flags = "s", max = 1)
     public void god(CommandContext args, Actor sender) throws CommandException, AuthorizationException {
@@ -170,6 +171,7 @@ public class GeneralCommands {
             sender.print("Все игроки исцелены.");
         }
     }
+    */
     
     @Command(aliases = {"slay"}, usage = "[игрок]", desc = "Убить игрока", flags = "s", max = 1)
     public void slay(CommandContext args, Actor sender) throws CommandException, AuthorizationException {
@@ -211,7 +213,8 @@ public class GeneralCommands {
             sender.print("Все игроки убиты.");
         }
     }
-    
+
+    /*
     @Command(aliases = {"locate"}, usage = "[игрок]", desc = "Найти игрока", max = 1)
     @CommandPermissions({"worldguard.locate"})
     public void locate(CommandContext args, Actor sender) throws CommandException {
@@ -228,7 +231,8 @@ public class GeneralCommands {
             sender.print("Компас переназначен.");
         }
     }
-    
+    */
+
     @SuppressWarnings("removal")
     @Command(aliases = {"stack", ";"}, usage = "", desc = "Собрать предметы в стаки", max = 0)
     @CommandPermissions({"worldguard.stack"})

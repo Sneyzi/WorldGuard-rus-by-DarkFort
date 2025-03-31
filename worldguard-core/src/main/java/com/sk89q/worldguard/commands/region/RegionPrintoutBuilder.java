@@ -43,6 +43,7 @@ import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.RegionGroupFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -289,17 +290,13 @@ public class RegionPrintoutBuilder implements Callable<TextComponent> {
             builder.append(TextComponent.space().append(TextComponent.of("[Добавить]", TextColor.BLUE)
                             .hoverEvent(HoverEvent.of(HoverEvent.Action.SHOW_TEXT, TextComponent.of("Нажмите, чтобы добавить игрока или группу")))
                             .clickEvent(ClickEvent.of(ClickEvent.Action.SUGGEST_COMMAND,
-                                    "/rg " + addCommand + " -w \"" + world + "\" " + region.getId() + " "))));
+                                    "/rg " + addCommand + " " + region.getId() + " "))));
         }
         if (removeCommand != null && domain.size() > 0) {
             builder.append(TextComponent.space().append(TextComponent.of("[Удалить]", TextColor.RED)
                     .hoverEvent(HoverEvent.of(HoverEvent.Action.SHOW_TEXT, TextComponent.of("Нажмите, чтобы удалить игрока или группы")))
                     .clickEvent(ClickEvent.of(ClickEvent.Action.SUGGEST_COMMAND,
-                            "/rg " + removeCommand + " -w \"" + world + "\" " + region.getId() + " "))));
-            builder.append(TextComponent.space().append(TextComponent.of("[Очистить]", TextColor.RED)
-                    .hoverEvent(HoverEvent.of(HoverEvent.Action.SHOW_TEXT, TextComponent.of("Нажмите, чтобы очистить")))
-                    .clickEvent(ClickEvent.of(ClickEvent.Action.SUGGEST_COMMAND,
-                            "/rg " + removeCommand + " -w \"" + world + "\" -a " + region.getId()))));
+                            "/rg " + removeCommand + " " + region.getId() + " "))));
         }
     }
 
@@ -317,7 +314,7 @@ public class RegionPrintoutBuilder implements Callable<TextComponent> {
                     .clickEvent(ClickEvent.of(ClickEvent.Action.RUN_COMMAND, "/rg select " + region.getId()));
         }
         builder.append(bound);
-        builder.append(TextComponent.of("\n§aРазмер: §e" + region.volume()));
+        builder.append(TextComponent.of("\n§aРазмер: §e" + NumberFormat.getInstance().format(region.volume())));
         final Location teleFlag = FlagValueCalculator.getEffectiveFlagOf(region, Flags.TELE_LOC, perms != null && perms.getSender() instanceof RegionAssociable ? (RegionAssociable) perms.getSender() : null);
         if (teleFlag != null && perms != null && perms.mayTeleportTo(region)) {
             builder.append(TextComponent.space().append(TextComponent.of("[Телепортация]", TextColor.GRAY)
@@ -336,6 +333,7 @@ public class RegionPrintoutBuilder implements Callable<TextComponent> {
                             "/rg tp -c -w \"" + world + "\" " + region.getId()))));
         }
         builder.append(TextComponent.of("\n§c§lБудьте внимательны! Не добавляйте в приват кого попало!§r"));
+        builder.append(TextComponent.of("\n§7▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"));
 
         newline();
     }
@@ -365,7 +363,7 @@ public class RegionPrintoutBuilder implements Callable<TextComponent> {
 
     @Override
     public TextComponent call() {
-        MessageBox box = new MessageBox("§6⦗§fИнформация о регионе§6⦘", builder);
+        MessageBox box = new MessageBox("§7▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬§6⦗§fИнформация о регионе§6⦘§7▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬", builder);
         appendRegionInformation();
         return box.create();
     }
